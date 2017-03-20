@@ -7,7 +7,12 @@ gem "sinatra-activerecord"
 gem "sinatra-json"
 gem "rake"
 gem "puma"
-gem "pg"
-gem "sqlite3"
 gem "haml"
-gem "tux"
+
+group :production do
+  gem 'pg'
+end
+
+group :development, :test do
+  gem 'sqlite3'
+end
