@@ -1,0 +1,7 @@
+%ul#event
+   %li= @event.id
+   %li= @event.action
+- @event.users.each do |user|
+   %li= user.id
+   %li= user.name
+      
