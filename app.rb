@@ -11,6 +11,10 @@ require 'haml'
 
 set :database_file, "config/database.yml"
 
+get '/' do
+	puts 'EventManager'
+end
+
 #Index users
 get '/users' do
    @users = User.all
