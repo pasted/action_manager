@@ -9,7 +9,7 @@ require_relative 'models/event_user'
 set :database_file, "config/database.yml"
 
 #Main index page
-get '/index' do
+get '/' do
 	erb :index
 end
 
