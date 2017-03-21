@@ -1,7 +1,7 @@
 # config.ru
 require 'sinatra/activerecord'
 require 'sinatra/activerecord/rake'
-require './app'
+require './action_manager'
 
 use Rack::MethodOverride
 

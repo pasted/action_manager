@@ -18,14 +18,14 @@ end
 #Index users
 get '/users' do
    @users = User.all
-   haml :"users/index"
+   json @users
 end
 
 #Show user
 get '/users/:id' do
 	@user = User.find(params[:id])
 	if @user
-		haml :"users/show"
+		json @user
   	else
   		halt 404
   	end	
@@ -67,14 +67,14 @@ end
 #Index events
 get '/events' do
    @events = Event.all
-   haml :"events/index"
+   json @events
 end
 
 #Show event
 get '/events/:id' do
 	@event = Event.find(params[:id])
 	if @event
-		haml :"events/show"
+		json @event
   	else
   		halt 404
   	end	
@@ -109,4 +109,10 @@ delete 'posts/:id/delete' do
 	@event = Event.find_by_id(params[:id])
 	@event.delete
 	redirect to '/events'
+end
+
+#convenience methods
+get '/users_with_action' do
+	@users = User.all
+	json @users
 end
