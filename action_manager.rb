@@ -86,7 +86,7 @@ get '/count_users_with_action' do
 end
 
 get '/has_user_performed_action' do
-	@users = User.where(params[:user_id]).joins(:events).where(events: {action: params[:action]})
+	@users = User.where(params[:usid]).joins(:events).where(events: {action: params[:action]})
 	if @users.length > 0
 		json "true"
 	else
@@ -104,7 +104,7 @@ get '/last_time_user_performed_action' do
 end
 
 get '/list_all_users_who_performed_action_at' do
-	@users = User.joins(:event_users).where(event_users: {created_at: Time.parse(params[:timestamp]).utc.iso8601})
+	@users = User.joins(:event_users).where(event_users: {created_at: Time.parse(params[:timestamp]).iso8601 })
 	json @users
 end
 
