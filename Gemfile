@@ -7,7 +7,6 @@ gem "sinatra-activerecord"
 gem "sinatra-json"
 gem "rake"
 gem "puma"
-gem "haml"
 
 group :production do
   gem 'pg'
