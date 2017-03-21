@@ -2,6 +2,7 @@ require 'rubygems'
 require 'sinatra'
 require 'sinatra/activerecord'
 require 'sinatra/json'
+
 require_relative 'models/user'
 require_relative 'models/event'
 require_relative 'models/event_user'
@@ -13,6 +14,8 @@ get '/' do
 	erb :index
 end
 
+#User actions
+#user_id field contained in this model
 #Index users
 get '/users' do
    @users = User.all
@@ -29,7 +32,8 @@ get '/users/:id' do
   	end	
 end
 
-
+#Event actions
+#action field contained in this model
 #Index events
 get '/events' do
    @events = Event.all
@@ -46,6 +50,25 @@ get '/events/:id' do
   	end	
 end
 
+#event_users
+#created_at field in this model reflects function of the time-stamp field in the project description
+#Possible link table for the proposed Location data
+#Index event_users
+get '/event_users' do
+   @event_users = EventUser.all
+   json @event_users
+end
+
+#Show event_users
+get '/event_users/:id' do
+	@event_user = EventUser.find(params[:id])
+	if @event_user
+		json @event_user
+  	else
+  		halt 404
+  	end	
+end
+
 
 #convenience methods
 get '/users_with_action' do
@@ -55,11 +78,15 @@ end
 
 get '/count_users_with_action' do
 	@users = User.joins(:events).where(events: {action: params[:action]})
-	json @users.length
+	if @users
+		json @users.length
+	else
+		halt 404
+	end
 end
 
 get '/has_user_performed_action' do
-	@users = User.where(params[:id]).joins(:events).where(events: {action: params[:action]})
+	@users = User.where(params[:user_id]).joins(:events).where(events: {action: params[:action]})
 	if @users.length > 0
 		json "true"
 	else
@@ -68,8 +95,12 @@ get '/has_user_performed_action' do
 end
 
 get '/last_time_user_performed_action' do
-	@event_user = EventUser.where(event_users: {user_id: params[:id]}).joins(:event).where(events: {action: params[:action]}).first
-	json @event_user.created_at
+	@event_user = EventUser.where(event_users: {user_id: params[:user_id]}).joins(:event).where(events: {action: params[:action]}).first
+	if @event_user
+		json @event_user.created_at
+	else
+		halt 404
+	end
 end
 
 get '/list_all_users_who_performed_action_at' do

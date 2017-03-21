@@ -1,11 +1,12 @@
 source "https://rubygems.org"
 
-ruby "2.4.0"
+ruby "2.2.5"
 
+gem "rake"
 gem "sinatra"
 gem "sinatra-activerecord"
+gem "activerecord"
 gem "sinatra-json"
-gem "rake"
 gem "puma"
 
 group :production do
